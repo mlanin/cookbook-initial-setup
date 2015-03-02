@@ -1,0 +1,8 @@
+set tabstospaces
+set tabsize 4
+
+include /usr/share/nano/html.nanorc
+include /usr/share/nano/php.nanorc
+include /usr/share/nano/css.nanorc
+include /usr/share/nano/nginx.nanorc
+include /usr/share/nano/xml.nanorc
