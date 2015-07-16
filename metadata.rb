@@ -1,8 +1,8 @@
 name             'initial_setup'
-maintainer       'initial_setup'
-maintainer_email 'maxim.lanin@initial_setup.com'
+maintainer       'Maxim Lanin'
+maintainer_email 'max@lanin.me'
 license          'All rights reserved'
-description      'Preconfigures initial_setup servers'
+description      'Preconfigures debian/ubuntu servers'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.2.0'
 
