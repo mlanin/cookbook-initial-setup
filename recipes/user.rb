@@ -1,26 +1,26 @@
 #
-# Cookbook Name:: debian_setup
+# Cookbook Name:: initial_setup
 # Recipe:: user
 #
-# Copyright 2014, debian_setup
+# Copyright 2014, initial_setup
 #
 # All rights reserved - Do Not Redistribute
 #
 
-node['debian_setup']['users'].each do |user, info| 
+node['initial_setup']['users'].each do |user, info| 
 
     info['home_dir'] = info['home_dir'] || "/home/#{user}"
-    info['shell']    = info['shell'] || node['debian_setup']['default']['shell']
-    info['ssh_keys'] = info['ssh_keys'] || node['debian_setup']['default']['ssh_keys']
-    info['groups']   = info['groups'] || node['debian_setup']['default']['groups']
-    info['sudo']     = info['sudo'] || node['debian_setup']['default']['sudo']{ "group" => false, "commands" => [] }
+    info['shell']    = info['shell']    || node['initial_setup']['default']['shell']
+    info['ssh_keys'] = info['ssh_keys'] || node['initial_setup']['default']['ssh_keys']
+    info['groups']   = info['groups']   || node['initial_setup']['default']['groups']
+    info['sudo']     = info['sudo']     || node['initial_setup']['default']['sudo']{ "group" => false, "commands" => [] }
 
     if user != "vagrant"
         begin
-            site = data_bag_item("debian_setup", node['hostname'])
-            password = site[user]["password"] || node['debian_setup']['default']['password']
+            site = data_bag_item("initial_setup", node['hostname'])
+            password = site[user]["password"] || node['initial_setup']['default']['password']
         rescue
-            password = node['debian_setup']['password'] || node['debian_setup']['default']['password']
+            password = node['initial_setup']['password'] || node['initial_setup']['default']['password']
         end
 
         user_account user do

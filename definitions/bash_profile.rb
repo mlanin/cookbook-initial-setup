@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: debian_setup
+# Cookbook Name:: initial_setup
 # Definition: bash_profile
 #
-# Copyright 2014, debian_setup
+# Copyright 2014, initial_setup
 #
 # All rights reserved - Do Not Redistribute
 #

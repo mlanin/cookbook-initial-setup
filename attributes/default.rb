@@ -1,8 +1,8 @@
-default['debian_setup']['packages'] = ["sshpass", "bash-completion", "unattended-upgrades", "htop", "figlet"]
+default['initial_setup']['packages'] = ["sshpass", "bash-completion", "unattended-upgrades", "htop", "figlet"]
+default['initial_setup']['timezone'] = "Etc/GMT"
+default['initial_setup']['ssh_known_hosts'] = []
 
-default['debian_setup']['timezone'] = "Etc/GMT"
-
-default['debian_setup']['users'] = {
+default['initial_setup']['users'] = {
 	"default_user" => {
 		"groups" => [],
 		"password" => "Qwerty!@",
@@ -16,8 +16,8 @@ default['debian_setup']['users'] = {
 	}
 }
 
-default['debian_setup']['default']['groups'] = []
-default['debian_setup']['default']['password'] = "Qwerty!@"
-default['debian_setup']['default']['shell'] = "/bin/bash"
-default['debian_setup']['default']['ssh_keys'] = []
-default['debian_setup']['default']['sudo'] = { "group" => false, "nopasswd" => [] }
+default['initial_setup']['default']['groups'] = []
+default['initial_setup']['default']['password'] = "Qwerty!@"
+default['initial_setup']['default']['shell'] = "/bin/bash"
+default['initial_setup']['default']['ssh_keys'] = []
+default['initial_setup']['default']['sudo'] = { "group" => false, "nopasswd" => [] }

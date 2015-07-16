@@ -1,13 +1,13 @@
 #
-# Cookbook Name:: debian_setup
+# Cookbook Name:: initial_setup
 # Recipe:: default
 #
-# Copyright 2014, debian_setup
+# Copyright 2014, initial_setup
 #
 # All rights reserved - Do Not Redistribute
 #
 
-node['debian_setup']['packages'].each do |pckg|
+node['initial_setup']['packages'].each do | pckg |
     package pckg
 end
 
@@ -26,6 +26,12 @@ directory "/var/www" do
     action :create
 end
 
-include_recipe 'debian_setup::datetime'
-include_recipe 'debian_setup::motd'
-include_recipe 'debian_setup::user'
+include_recipe 'initial_setup::datetime'
+include_recipe 'initial_setup::motd'
+include_recipe 'initial_setup::user'
+
+node['initial_setup']['ssh_known_hosts'].each do | known_host |
+	ssh_known_hosts_entry known_host do
+	    not_if "a=$(ssh-keyscan -H -t rsa #{known_host} | grep -Po '(AAAA.*)'); grep $a #{node['ssh_known_hosts']['file']}"
+	end
+end

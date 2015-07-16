@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: debian_setup
+# Cookbook Name:: initial_setup
 # Recipe:: datetime
 #
-# Copyright 2014, debian_setup
+# Copyright 2014, initial_setup
 #
 # All rights reserved - Do Not Redistribute
 #
@@ -25,7 +25,7 @@ file "/etc/timezone" do
   owner "root"
   group "root"
   mode "00644"
-  content node["debian_setup"]["timezone"]
+  content node["initial_setup"]["timezone"]
   notifies :run, "execute[update-tzdata]"
 end
 
