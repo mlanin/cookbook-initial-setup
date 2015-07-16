@@ -1,48 +1,74 @@
 #
-# Cookbook Name:: acronis
+# Cookbook Name:: debian_setup
 # Recipe:: user
 #
-# Copyright 2014, Acronis
+# Copyright 2014, debian_setup
 #
 # All rights reserved - Do Not Redistribute
 #
 
-if node.chef_environment != "Vagrant"
-    begin
-        site = data_bag_item("acronis", node['hostname'])
-        password = site["password"]
-    rescue
-        password = node['acronis']['password']
+node['debian_setup']['users'].each do |user, info| 
+
+    info['home_dir'] = info['home_dir'] || "/home/#{user}"
+    info['shell']    = info['shell'] || node['debian_setup']['default']['shell']
+    info['ssh_keys'] = info['ssh_keys'] || node['debian_setup']['default']['ssh_keys']
+    info['groups']   = info['groups'] || node['debian_setup']['default']['groups']
+    info['sudo']     = info['sudo'] || node['debian_setup']['default']['sudo']{ "group" => false, "commands" => [] }
+
+    if user != "vagrant"
+        begin
+            site = data_bag_item("debian_setup", node['hostname'])
+            password = site[user]["password"] || node['debian_setup']['default']['password']
+        rescue
+            password = node['debian_setup']['password'] || node['debian_setup']['default']['password']
+        end
+
+        user_account user do
+            home        info['home_dir']
+            shell       info['shell']
+            ssh_keys    info['ssh_keys']
+        end
+
+        bash "Set password for #{user}" do
+            user "root"
+            code <<-EOF
+                echo "#{user}:#{password}" | chpasswd
+            EOF
+        end
+
+        if info['sudo']['group']
+            bash "Update #{user} user" do
+                user "root"
+                code <<-EOF
+                    usermod -a -G sudo #{user}
+                EOF
+            end
+        end
     end
 
-    user_account node['acronis']['user'] do
-        home        node['acronis']['home_dir']
-        shell       node['acronis']['shell']
-        ssh_keys    node['acronis']['ssh_keys']
+    if info['groups'].any?
+        groups = info['groups'].join(",");
+
+        bash "Update #{user} user" do
+            user "root"
+            code <<-EOF
+                usermod -a -G #{groups} #{user}
+            EOF
+        end
     end
 
-    bash "Set password for #{node['acronis']['user']}" do
-        user "root"
-        code <<-EOF
-            echo "#{node['acronis']['user']}:#{password}" | chpasswd
-        EOF
+    if info['sudo']['nopasswd'].any?
+        sudo user do
+            user      user
+            nopasswd  true
+            runas     'root'
+            commands  info['sudo']['nopasswd']
+        end
     end
+
+    bash_profile user do
+        home_dir info['home_dir']
+    end
+    
 end
 
-bash "Update #{node['acronis']['user']} user" do
-    user "root"
-    code <<-EOF
-        usermod -a -G staff,sudo #{node['acronis']['user']}
-    EOF
-end
-
-bash_profile node['acronis']['user'] do
-    home_dir node['acronis']['home_dir']
-end
-
-sudo node['acronis']['user'] do
-    user      node['acronis']['user']
-    nopasswd  true
-    runas     'root'
-    commands  node['acronis']['sudo_commands']
-end

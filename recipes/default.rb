@@ -1,13 +1,13 @@
 #
-# Cookbook Name:: acronis
+# Cookbook Name:: debian_setup
 # Recipe:: default
 #
-# Copyright 2014, Acronis
+# Copyright 2014, debian_setup
 #
 # All rights reserved - Do Not Redistribute
 #
 
-node['acronis']['packages'].each do |pckg|
+node['debian_setup']['packages'].each do |pckg|
     package pckg
 end
 
@@ -26,10 +26,6 @@ directory "/var/www" do
     action :create
 end
 
-include_recipe 'acronis::datetime'
-include_recipe 'acronis::motd'
-include_recipe 'acronis::user'
-
-if node['acronis']['gitlab']['connect']
-    include_recipe 'acronis::gitlab'
-end
+include_recipe 'debian_setup::datetime'
+include_recipe 'debian_setup::motd'
+include_recipe 'debian_setup::user'

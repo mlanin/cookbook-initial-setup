@@ -1,18 +1,23 @@
-default['acronis']['packages'] = ["sshpass", "bash-completion", "unattended-upgrades", "htop"]
+default['debian_setup']['packages'] = ["sshpass", "bash-completion", "unattended-upgrades", "htop", "figlet"]
 
-default['acronis']['user'] = "acronis"
-default['acronis']['group'] = node['acronis']['user']
-default['acronis']['password'] = "Qwerty!@"
-default['acronis']['home_dir'] = "/home/#{node['acronis']['user']}"
-default['acronis']['shell'] = "/bin/bash"
+default['debian_setup']['timezone'] = "Etc/GMT"
 
-default['acronis']['timezone'] = "Etc/GMT"
-default['acronis']['ssh_keys'] = []
-default['acronis']['sudo_commands'] = ["CHEF_CLIENT"] # default aliases CHEF_CLIENT, NGINX_RELOAD, NGINX_CLEAR_CACHE, MEMCACHED_RESTART
+default['debian_setup']['users'] = {
+	"default_user" => {
+		"groups" => [],
+		"password" => "Qwerty!@",
+		"home" => "/home/default_user",
+		"shell" => "/bin/bash",
+		"ssh_keys" => [],
+		"sudo" => {
+			"group" => true,
+			"nopasswd" => []
+		}
+	}
+}
 
-default['acronis']['gitlab']['connect'] = false
-default['acronis']['gitlab']['api_scheme'] = 'http'
-default['acronis']['gitlab']['api_domain'] = ''
-default['acronis']['gitlab']['project_id'] = nil
-default['acronis']['gitlab']['label'] = 'id_rsa'
-default['acronis']['gitlab']['token'] = ''
+default['debian_setup']['default']['groups'] = []
+default['debian_setup']['default']['password'] = "Qwerty!@"
+default['debian_setup']['default']['shell'] = "/bin/bash"
+default['debian_setup']['default']['ssh_keys'] = []
+default['debian_setup']['default']['sudo'] = { "group" => false, "nopasswd" => [] }

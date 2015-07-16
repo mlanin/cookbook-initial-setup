@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: acronis
+# Cookbook Name:: debian_setup
 # Definition: bash_profile
 #
-# Copyright 2014, Acronis
+# Copyright 2014, debian_setup
 #
 # All rights reserved - Do Not Redistribute
 #

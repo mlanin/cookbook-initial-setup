@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: acronis
+# Cookbook Name:: debian_setup
 # Recipe:: datetime
 #
-# Copyright 2014, Acronis
+# Copyright 2014, debian_setup
 #
 # All rights reserved - Do Not Redistribute
 #
@@ -25,7 +25,7 @@ file "/etc/timezone" do
   owner "root"
   group "root"
   mode "00644"
-  content node["acronis"]["timezone"]
+  content node["debian_setup"]["timezone"]
   notifies :run, "execute[update-tzdata]"
 end
 
