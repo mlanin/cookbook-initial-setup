@@ -7,7 +7,6 @@ Requirements
 ------------
 Debian / Ubuntu
 
-e.g.
 #### packages
 - `user` - for creating/updating users.
 - `sudo` - to create sudo rules.
@@ -15,9 +14,7 @@ e.g.
 
 Attributes
 ----------
-TODO: List your cookbook attributes here.
 
-e.g.
 #### initial_setup::default
 <table>
   <tr>
@@ -37,9 +34,7 @@ e.g.
 Usage
 -----
 #### initial_setup::default
-TODO: Write usage instructions for each cookbook.
 
-e.g.
 Just include `initial_setup` in your node's `run_list`:
 
 ```json
